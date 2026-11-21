@@ -1,27 +1,434 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Facial Recognition Ethics</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recommendations | Your Face, Their Data</title>
+  <meta name="description" content="Our recommendations for using facial recognition with less harm: technology, social, and policy strategies.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0f1115; --panel: #171a21; --panel-2: #1e222b;
+      --text: #e9e7e2; --muted: #a3a7b0;
+      --accent: #ff6b4a; --accent-2: #4ad6c8; --gold: #e8c468; --purple: #a98bff; --line: #2a2f3a; --radius: 14px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "Inter", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px; }
+    a { color: var(--accent-2); }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 10; background: rgba(15,17,21,0.9); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .logo { font-family: "Fraunces", serif; font-weight: 800; font-size: 1.15rem; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 22px; list-style: none; flex-wrap: wrap; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* LAYOUT */
+    section { padding: 80px 24px; }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    .narrow { max-width: 760px; }
+    h1, h2, h3 { font-family: "Fraunces", serif; line-height: 1.15; }
+    h1 { font-size: clamp(2.4rem, 5.5vw, 3.8rem); margin-bottom: 18px; }
+    h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); margin-bottom: 18px; }
+    h3 { font-size: 1.2rem; margin-bottom: 8px; }
+    p + p { margin-top: 14px; }
+    .eyebrow { display: inline-block; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
+    .muted { color: var(--muted); }
+    .alt { background: var(--panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .page-head { padding: 90px 24px 50px; }
+    .page-head p.lead { font-size: 1.15rem; color: var(--muted); max-width: 700px; }
+
+    /* THREE LEVELS NAV */
+    .levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 30px; }
+    .level-link { display: block; text-decoration: none; color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; transition: transform .2s; }
+    .level-link:hover { transform: translateY(-3px); }
+    .level-link .icon { font-size: 1.8rem; display: block; margin-bottom: 6px; }
+    .level-link p { color: var(--muted); font-size: 0.9rem; }
+    .level-link.tech { border-top: 4px solid var(--accent-2); }
+    .level-link.social { border-top: 4px solid var(--gold); }
+    .level-link.policy { border-top: 4px solid var(--purple); }
+
+    /* REC CARDS */
+    .rec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 30px; }
+    .rec { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; position: relative; }
+    section:not(.alt) .rec { background: var(--panel); }
+    .rec .num { font-family: "Fraunces", serif; font-size: 0.95rem; font-weight: 800; display: inline-block; width: 34px; height: 34px; line-height: 34px; text-align: center; border-radius: 50%; margin-bottom: 12px; color: #111; }
+    .tech-sec .num { background: var(--accent-2); }
+    .social-sec .num { background: var(--gold); }
+    .policy-sec .num { background: var(--purple); }
+    .rec p { color: var(--muted); font-size: 0.95rem; }
+    .rec .fixes { display: block; margin-top: 12px; font-size: 0.82rem; font-weight: 600; }
+    .tech-sec .fixes { color: var(--accent-2); }
+    .social-sec .fixes { color: var(--gold); }
+    .policy-sec .fixes { color: var(--purple); }
+    .tech-sec .eyebrow { color: var(--accent-2); }
+    .social-sec .eyebrow { color: var(--gold); }
+    .policy-sec .eyebrow { color: var(--purple); }
+
+    /* EXAMPLE BOX */
+    .example { margin-top: 28px; background: rgba(169,139,255,.08); border: 1px solid var(--purple); border-radius: var(--radius); padding: 24px; }
+    .example h3 { color: var(--purple); }
+    .example p { font-size: 0.95rem; }
+
+    /* FIX-IT TOOL */
+    .tool { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 30px; align-items: start; }
+    .checks { display: flex; flex-direction: column; gap: 10px; }
+    .check { display: flex; gap: 12px; align-items: flex-start; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; cursor: pointer; transition: border-color .2s; }
+    .check:hover { border-color: var(--muted); }
+    .check input { margin-top: 5px; width: 18px; height: 18px; accent-color: var(--accent-2); cursor: pointer; flex-shrink: 0; }
+    .check strong { display: block; font-size: 0.98rem; }
+    .check span { font-size: 0.85rem; color: var(--muted); }
+    .meter-box { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; position: sticky; top: 90px; }
+    .meter-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 600; }
+    .meter-num { font-family: "Fraunces", serif; font-size: 3.4rem; line-height: 1; margin: 10px 0; }
+    .meter { height: 14px; background: var(--panel-2); border-radius: 999px; overflow: hidden; margin: 12px 0 16px; }
+    .meter-fill { height: 100%; width: 100%; border-radius: 999px; transition: width .5s ease, background .5s ease; }
+    .meter-msg { font-size: 0.95rem; color: var(--muted); }
+
+    /* WHO TABLE */
+    .who-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 30px; }
+    .who { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+    .who .icon { font-size: 1.8rem; display: block; margin-bottom: 6px; }
+    .who ul { padding-left: 18px; color: var(--muted); font-size: 0.93rem; }
+    .who li { margin-bottom: 6px; }
+
+    blockquote { border-left: 3px solid var(--accent); padding: 6px 0 6px 18px; margin: 24px 0; font-family: "Fraunces", serif; font-size: 1.35rem; }
+    .btn { display: inline-block; padding: 13px 24px; border-radius: 999px; background: var(--accent); color: #111; font-weight: 600; text-decoration: none; }
+
+    footer { border-top: 1px solid var(--line); padding: 50px 24px; font-size: 0.9rem; color: var(--muted); }
+    footer h4 { color: var(--text); margin-bottom: 10px; font-family: "Fraunces", serif; font-size: 1.1rem; }
+    footer ol { padding-left: 20px; }
+    footer li { margin-bottom: 6px; }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 860px) {
+      .levels, .rec-grid, .tool, .who-grid { grid-template-columns: 1fr; }
+      .meter-box { position: static; }
+    }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Facial Recognition Ethics</h1>
-  </header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="case-studies.html">Case Studies</a>
-    <a href="ethics.html">Ethics</a>
-    <a href="recommendations.html">Solutions</a>
+  <!-- ================= NAV ================= -->
+  <nav aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">Your Face, <span>Their Data</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="case-studies.html">Case Studies</a></li>
+        <li><a href="ethics.html">Ethics</a></li>
+        <li><a href="recommendations.html" class="active">Recommendations</a></li>
+      </ul>
+    </div>
   </nav>
 
   <main>
-    <h2>Section Coming Soon</h2>
-    <p>Our team is working on this section.</p>
+
+    <!-- ================= HEADER ================= -->
+    <header class="page-head">
+      <div class="wrap">
+        <span class="eyebrow">Part 4 · Recommendations</span>
+        <h1>So what should<br>we do about it?</h1>
+        <p class="lead">
+          We don't think facial recognition needs to disappear completely. Face ID shows it can be done in a way that
+          respects people. But Rite Aid and the Detroit arrests show what happens when there are no real rules. Here's what
+          we think should change, at three different levels.
+        </p>
+
+        <div class="levels">
+          <a href="#tech" class="level-link tech">
+            <span class="icon" aria-hidden="true">🛠️</span>
+            <h3>Technology</h3>
+            <p>Build the tech itself to be safer and fairer</p>
+          </a>
+          <a href="#social" class="level-link social">
+            <span class="icon" aria-hidden="true">🤝</span>
+            <h3>Social &amp; company practices</h3>
+            <p>Change how people and businesses actually use it</p>
+          </a>
+          <a href="#policy" class="level-link policy">
+            <span class="icon" aria-hidden="true">🏛️</span>
+            <h3>Policy &amp; law</h3>
+            <p>Set clear rules that everyone has to follow</p>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= TECH ================= -->
+    <section id="tech" class="alt tech-sec">
+      <div class="wrap">
+        <div class="narrow reveal">
+          <span class="eyebrow">Level 1 · Technology</span>
+          <h2>Build it better from the start</h2>
+          <p>Some of the problems we found can be reduced by designing the technology more carefully.</p>
+        </div>
+        <div class="rec-grid reveal">
+          <div class="rec">
+            <span class="num">1</span>
+            <h3>Keep face data on the device when possible</h3>
+            <p>Face ID proves this works. If your faceprint never leaves your phone, it can't end up in a giant database or get leaked in a hack.</p>
+            <span class="fixes">Fixes: data you can't reset, privacy</span>
+          </div>
+          <div class="rec">
+            <span class="num">2</span>
+            <h3>Test for bias before and after launch</h3>
+            <p>Companies should test their systems on different races, genders, and ages, and keep testing after rollout. Rite Aid didn't properly test its system at all.</p>
+            <span class="fixes">Fixes: bias, unequal harm</span>
+          </div>
+          <div class="rec">
+            <span class="num">3</span>
+            <h3>Refuse blurry or low-quality images</h3>
+            <p>If a photo is too blurry, the system should say "can't tell" instead of guessing. Bad photos were a huge reason Rite Aid had so many false alerts.</p>
+            <span class="fixes">Fixes: false matches</span>
+          </div>
+          <div class="rec">
+            <span class="num">4</span>
+            <h3>Show how confident the match is</h3>
+            <p>Instead of just saying "MATCH," systems should show a confidence score and clearly warn that it's a possible lead, not proof.</p>
+            <span class="fixes">Fixes: people trusting the machine too much</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SOCIAL ================= -->
+    <section id="social" class="social-sec">
+      <div class="wrap">
+        <div class="narrow reveal">
+          <span class="eyebrow">Level 2 · Social &amp; company practices</span>
+          <h2>Put humans back in charge</h2>
+          <p>Even good technology can cause harm if the people using it don't use it responsibly.</p>
+        </div>
+        <div class="rec-grid reveal">
+          <div class="rec">
+            <span class="num">5</span>
+            <h3>Tell people when they're being scanned</h3>
+            <p>Clear signs at the entrance at the very least. Better yet, ask for consent. People deserve to know before their face gets compared to a list.</p>
+            <span class="fixes">Fixes: no consent, no warning</span>
+          </div>
+          <div class="rec">
+            <span class="num">6</span>
+            <h3>A human must double-check every match</h3>
+            <p>No one should get searched, kicked out, or arrested just because a computer said so. A trained person should review the match and look for other evidence first.</p>
+            <span class="fixes">Fixes: false accusations, wrongful arrests</span>
+          </div>
+          <div class="rec">
+            <span class="num">7</span>
+            <h3>Train the employees who use it</h3>
+            <p>Workers need to understand that these systems make mistakes, especially with certain groups, and know what to do (and not do) when they get an alert.</p>
+            <span class="fixes">Fixes: overtrusting the system</span>
+          </div>
+          <div class="rec">
+            <span class="num">8</span>
+            <h3>Give people a way to fight back</h3>
+            <p>If you're wrongly flagged, you should be able to find out why, challenge it, and get your face removed from the database.</p>
+            <span class="fixes">Fixes: no way to appeal</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= POLICY ================= -->
+    <section id="policy" class="alt policy-sec">
+      <div class="wrap">
+        <div class="narrow reveal">
+          <span class="eyebrow">Level 3 · Policy &amp; law</span>
+          <h2>Make the rules official</h2>
+          <p>
+            Company promises only go so far. Rite Aid only stopped because the government stepped in. We think clear laws
+            are the most important piece, because they apply to everyone.
+          </p>
+        </div>
+        <div class="rec-grid reveal">
+          <div class="rec">
+            <span class="num">9</span>
+            <h3>A national biometric privacy law</h3>
+            <p>The U.S. doesn't have one federal law protecting face data. We think there should be one that requires companies to get people's permission before collecting their faceprints.</p>
+            <span class="fixes">Fixes: consent everywhere, not just some states</span>
+          </div>
+          <div class="rec">
+            <span class="num">10</span>
+            <h3>No arrests based only on a face match</h3>
+            <p>Detroit already agreed to this after Robert Williams' case. We think it should be the rule for every police department in the country.</p>
+            <span class="fixes">Fixes: wrongful arrests</span>
+          </div>
+          <div class="rec">
+            <span class="num">11</span>
+            <h3>Limit live scanning in public spaces</h3>
+            <p>Scanning crowds in real time, like on streets or at protests, should be heavily restricted, and allowed only in serious, specific situations with a judge's approval.</p>
+            <span class="fixes">Fixes: mass surveillance, chilling free speech</span>
+          </div>
+          <div class="rec">
+            <span class="num">12</span>
+            <h3>Independent audits and public reports</h3>
+            <p>Organizations using facial recognition should be audited by outside experts and publish how often their systems are wrong, and for whom.</p>
+            <span class="fixes">Fixes: hidden bias, no accountability</span>
+          </div>
+        </div>
+
+        <div class="example reveal">
+          <h3>These ideas already exist somewhere</h3>
+          <p>
+            We didn't make these up out of nowhere. <strong>Illinois</strong> already has the Biometric Information Privacy Act
+            (BIPA), which requires companies to get written consent before collecting things like faceprints. The
+            <strong>European Union's AI Act</strong> bans some uses of facial recognition, like scraping face images from the
+            internet to build databases, and strictly limits real-time face scanning in public. Our recommendations are
+            basically about taking ideas like these and making them the standard across the U.S.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FIX IT TOOL ================= -->
+    <section>
+      <div class="wrap">
+        <div class="narrow reveal">
+          <span class="eyebrow">Interactive</span>
+          <h2>Fix the Rite Aid system yourself</h2>
+          <p>
+            Imagine you're in charge of Rite Aid's facial recognition program. Check off the changes you'd make and watch
+            how the risk of harming innocent customers goes down. (This is a simplified model we made to show the idea, not real data.)
+          </p>
+        </div>
+
+        <div class="tool reveal">
+          <div class="checks">
+            <label class="check"><input type="checkbox" data-w="15"><div><strong>Post clear signs / ask for consent</strong><span>Customers know what's happening</span></div></label>
+            <label class="check"><input type="checkbox" data-w="20"><div><strong>Human reviews every match</strong><span>No action based on the computer alone</span></div></label>
+            <label class="check"><input type="checkbox" data-w="15"><div><strong>Reject blurry photos</strong><span>Only clear images in the database</span></div></label>
+            <label class="check"><input type="checkbox" data-w="15"><div><strong>Test for bias regularly</strong><span>Check accuracy across different groups</span></div></label>
+            <label class="check"><input type="checkbox" data-w="10"><div><strong>Train employees</strong><span>Teach staff the system can be wrong</span></div></label>
+            <label class="check"><input type="checkbox" data-w="10"><div><strong>Let people appeal</strong><span>A way to challenge and get removed</span></div></label>
+            <label class="check"><input type="checkbox" data-w="10"><div><strong>Outside audits</strong><span>Independent experts check the system</span></div></label>
+          </div>
+
+          <div class="meter-box" aria-live="polite">
+            <span class="meter-label">Risk of harming innocent people</span>
+            <div class="meter-num" id="riskNum">95%</div>
+            <div class="meter"><div class="meter-fill" id="riskFill"></div></div>
+            <p class="meter-msg" id="riskMsg">This is basically what Rite Aid did: no consent, no checks, blurry photos.</p>
+            <p class="meter-msg" style="margin-top:14px; font-size:0.85rem;">Notice it never hits 0%. Even with every fix, some risk is still there. That's why we think some uses should just be off-limits.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WHO ================= -->
+    <section class="alt">
+      <div class="wrap">
+        <div class="narrow reveal">
+          <span class="eyebrow">Who's responsible?</span>
+          <h2>Everyone has a part to play</h2>
+        </div>
+        <div class="who-grid reveal">
+          <div class="who">
+            <span class="icon" aria-hidden="true">🏢</span>
+            <h3>Companies</h3>
+            <ul>
+              <li>Test for bias before launching</li>
+              <li>Be honest with customers</li>
+              <li>Keep data on devices when possible</li>
+            </ul>
+          </div>
+          <div class="who">
+            <span class="icon" aria-hidden="true">🏛️</span>
+            <h3>Government</h3>
+            <ul>
+              <li>Pass a national biometric privacy law</li>
+              <li>Set rules for police use</li>
+              <li>Enforce them, like the FTC did with Rite Aid</li>
+            </ul>
+          </div>
+          <div class="who">
+            <span class="icon" aria-hidden="true">🙋</span>
+            <h3>Us (regular people)</h3>
+            <ul>
+              <li>Check app and phone privacy settings</li>
+              <li>Ask stores if they use face scanning</li>
+              <li>Support local laws about it</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONCLUSION ================= -->
+    <section>
+      <div class="wrap narrow reveal">
+        <span class="eyebrow">Wrapping up</span>
+        <h2>Final thoughts</h2>
+        <p>
+          When we started this project, most of us just thought of facial recognition as "that thing that unlocks my phone."
+          Now we see it a lot differently. The same technology can be convenient and respectful, or it can secretly scan
+          people, make mistakes, and hurt the people who are already treated unfairly.
+        </p>
+        <p>
+          Through the utilitarian lens, we saw that careless uses like Rite Aid's cause more harm than good. Through the
+          rights-based lens, we saw that even an accurate system is wrong if people never got a choice. Our recommendations
+          try to respect both: protect people's rights first, then make sure the tech actually helps.
+        </p>
+        <blockquote>Your face belongs to you. Any technology that uses it should have to earn your trust first.</blockquote>
+        <a href="index.html" class="btn">Back to the start ↑</a>
+      </div>
+    </section>
+
   </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="wrap">
+      <h4>Sources for this page</h4>
+      <ol>
+        <li>Federal Trade Commission (2023). "Rite Aid Banned from Using AI Facial Recognition..." <a href="https://www.ftc.gov/news-events/news/press-releases/2023/12/rite-aid-banned-using-ai-facial-recognition-after-ftc-says-retailer-deployed-technology-without-reasonable-safeguards" target="_blank" rel="noopener">ftc.gov</a></li>
+        <li>ACLU (2024). "Civil Rights Advocates Achieve the Nation's Strongest Police Department Policy on Facial Recognition Technology." <a href="https://aclu.org/press-releases/civil-rights-advocates-achieve-the-nations-strongest-police-department-policy-on-facial-recognition-technology" target="_blank" rel="noopener">aclu.org</a></li>
+        <li>Illinois General Assembly. "Biometric Information Privacy Act (740 ILCS 14)." <a href="https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=3004&amp;ChapterID=57" target="_blank" rel="noopener">ilga.gov</a></li>
+        <li>European Parliament. "EU AI Act: first regulation on artificial intelligence." <a href="https://www.europarl.europa.eu/topics/en/article/20230601STO93804/eu-ai-act-first-regulation-on-artificial-intelligence" target="_blank" rel="noopener">europarl.europa.eu</a></li>
+        <li>Apple. "About Face ID advanced technology." <a href="https://support.apple.com/en-us/102381" target="_blank" rel="noopener">support.apple.com</a></li>
+        <li>NIST (2019). "NIST Study Evaluates Effects of Race, Age, Sex on Face Recognition Software." <a href="https://www.nist.gov/news-events/news/2019/12/nist-study-evaluates-effects-race-age-sex-face-recognition-software" target="_blank" rel="noopener">nist.gov</a></li>
+      </ol>
+      <p style="margin-top:24px;">Made by Team F4 for our IT &amp; Society final project · 2026</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Fix-it risk meter
+    const boxes = document.querySelectorAll('.check input');
+    const num = document.getElementById('riskNum');
+    const fill = document.getElementById('riskFill');
+    const msg = document.getElementById('riskMsg');
+
+    function updateRisk() {
+      let risk = 95;
+      boxes.forEach(b => { if (b.checked) risk -= Number(b.dataset.w); });
+      risk = Math.max(risk, 5);
+      num.textContent = risk + '%';
+      fill.style.width = risk + '%';
+      let color, text;
+      if (risk > 65) { color = '#ff6b4a'; text = 'This is basically what Rite Aid did: no consent, no checks, blurry photos.'; }
+      else if (risk > 35) { color = '#e8c468'; text = 'Getting better, but innocent people could still get hurt.'; }
+      else { color = '#4ad6c8'; text = 'Much safer. With consent, human review, and testing, the system is far less likely to harm someone.'; }
+      fill.style.background = color;
+      num.style.color = color;
+      msg.textContent = text;
+    }
+    boxes.forEach(b => b.addEventListener('change', updateRisk));
+    updateRisk();
+  </script>
 </body>
 </html>
