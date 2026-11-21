@@ -4,42 +4,560 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Your Face, Their Data</title>
+
+  <meta name="description"
+    content="Facial recognition technology, real-world applications, ethics, and practical safeguards.">
+
+  <meta name="theme-color" content="#071423">
+
+  <title>Home | Your Face. Their Data.</title>
+
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
+
 <body>
-  <header>
-    <h1>Your Face, Their Data</h1>
-    <p>The Ethics of Facial Recognition Technology</p>
+
+  <!-- Website Navigation -->
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <a class="brand" href="index.html"
+         aria-label="Your Face Their Data home">
+        <span class="brand-icon" aria-hidden="true">◎</span>
+        <span>
+          YOUR FACE<span class="brand-dot">.</span>
+          THEIR DATA<span class="brand-dot">.</span>
+        </span>
+      </a>
+
+      <button class="menu-toggle"
+              type="button"
+              aria-controls="primary-nav"
+              aria-expanded="false"
+              aria-label="Open navigation">
+        ☰ <span>Menu</span>
+      </button>
+
+      <nav id="primary-nav"
+           class="main-nav"
+           aria-label="Main navigation">
+
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="case-studies.html">Real-World Cases</a>
+        <a href="ethics.html">Ethical Analysis</a>
+        <a href="recommendations.html">Solutions</a>
+
+      </nav>
+    </div>
   </header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="case-studies.html">Case Studies</a>
-    <a href="ethics.html">Ethics</a>
-    <a href="recommendations.html">Solutions</a>
-  </nav>
+  <main id="main">
 
-  <main>
-    <h2>What Is Facial Recognition?</h2>
-    <p>
-      Facial recognition is a technology that uses
-      computer algorithms to analyze and compare
-      facial features to verify or identify individuals.
-    </p>
+    <!-- SECTION 1: Main Introduction -->
+    <section class="hero">
+      <div class="container hero-grid">
 
-    <h2>Why Does It Matter?</h2>
-    <p>
-      Facial recognition is used in phones, security
-      systems, and other real-world settings.
-      Although it offers convenience and security,
-      it also raises concerns about privacy,
-      accuracy, surveillance, and discrimination.
-    </p>
+        <div class="hero-copy">
+
+          <p class="eyebrow">
+            <span class="eyebrow-line"></span>
+            IT ETHICS • FINAL PROJECT
+          </p>
+
+          <h1>
+            Your face.<br>
+            <em>Their data.</em>
+          </h1>
+
+          <p class="hero-lead">
+            Facial recognition can unlock your phone
+            in a second. It can also identify people
+            in public spaces.
+
+            <strong>
+              When does convenience become surveillance?
+            </strong>
+          </p>
+
+          <div class="hero-actions">
+
+            <a class="button button-primary"
+               href="case-studies.html">
+              Explore the two cases
+              <span aria-hidden="true">↗</span>
+            </a>
+
+            <a class="button button-outline"
+               href="ethics.html">
+              See the ethical debate
+            </a>
+
+          </div>
+
+          <p class="hero-micro">
+            Two documented applications.
+            Two ethical lenses.
+            One big question.
+          </p>
+
+        </div>
+
+        <!-- Original Face Recognition Illustration -->
+        <div class="hero-visual">
+
+          <div class="glow-disc"></div>
+
+          <svg class="face-art"
+               viewBox="0 0 420 460"
+               role="img"
+               aria-label="Illustration of a face represented by a wireframe scan">
+
+            <defs>
+              <linearGradient id="faceLine"
+                              x1="0" y1="0"
+                              x2="1" y2="1">
+                <stop stop-color="#66f5e7"/>
+                <stop offset="1" stop-color="#6b93ff"/>
+              </linearGradient>
+            </defs>
+
+            <g stroke="url(#faceLine)"
+               stroke-width="1.6"
+               fill="none"
+               opacity=".9">
+
+              <path d="M210 42 C137 40 105 95 106 171 C104 259 155 335 210 375 C265 335 316 259 314 171 C315 95 283 40 210 42Z"/>
+
+              <path d="M210 42V375M106 171L210 110L314 171M106 171L139 261L210 301L281 261L314 171M139 261L210 375L281 261M151 83L151 219L210 301L269 219L269 83M151 219L210 188L269 219M106 171L151 83L210 110L269 83L314 171M151 83L210 42L269 83M139 261L151 219L210 244L269 219L281 261M210 110L210 188L210 244"/>
+
+              <path d="M145 198l42 -8M233 190l42 8M187 269Q210 282 233 269"
+                    stroke-width="2.6"/>
+
+            </g>
+
+            <g fill="#7df7e7">
+              <circle cx="210" cy="42" r="4"/>
+              <circle cx="151" cy="83" r="4"/>
+              <circle cx="269" cy="83" r="4"/>
+              <circle cx="106" cy="171" r="4"/>
+              <circle cx="314" cy="171" r="4"/>
+              <circle cx="139" cy="261" r="4"/>
+              <circle cx="281" cy="261" r="4"/>
+              <circle cx="210" cy="244" r="4"/>
+              <circle cx="210" cy="375" r="4"/>
+            </g>
+
+            <g stroke="#7df7e7"
+               stroke-width="4"
+               fill="none">
+
+              <path d="M63 107V55H119M301 55H357V107M63 327V379H119M301 379H357V327"/>
+
+            </g>
+
+            <path d="M64 224H356"
+                  stroke="#7df7e7"
+                  stroke-width="1"
+                  stroke-dasharray="7 10"
+                  opacity=".5"/>
+
+            <g font-family="system-ui,sans-serif"
+               font-size="12"
+               fill="#9fe6ed">
+
+              <text x="60" y="32">ANALYSIS / 01</text>
+              <text x="256" y="415">BIOMETRIC MAP</text>
+
+            </g>
+
+          </svg>
+
+          <div class="art-label art-label-top">
+            FACE PATTERN <span>◉ ACTIVE</span>
+          </div>
+
+          <div class="art-label art-label-bottom">
+            Identity is personal.<br>
+            <strong>Technology makes it searchable.</strong>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Three Key Concepts -->
+    <section class="stats-strip" aria-label="Key ideas">
+      <div class="container stat-grid">
+
+        <div>
+          <span class="stat-num">01</span>
+          <span>
+            Facial <strong>verification</strong><br>
+            Does this face match the enrolled user?
+          </span>
+        </div>
+
+        <div>
+          <span class="stat-num">02</span>
+          <span>
+            Facial <strong>identification</strong><br>
+            Who is this person among many people?
+          </span>
+        </div>
+
+        <div>
+          <span class="stat-num">03</span>
+          <span>
+            Ethical <strong>stakes</strong><br>
+            Privacy, fairness, security, human dignity
+          </span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: How Facial Recognition Works -->
+    <section class="section container" id="technology">
+
+      <div class="section-heading">
+
+        <p class="kicker">01 / THE TECHNOLOGY</p>
+
+        <h2>What is facial recognition?</h2>
+
+        <p>
+          Facial recognition is a type of biometric
+          technology that analyzes facial features and
+          compares them with enrolled data to verify
+          or identify someone.
+
+          It may use photographs, video frames,
+          depth information, or infrared imagery,
+          depending on the system.
+        </p>
+
+      </div>
+
+      <div class="steps-grid">
+
+        <article class="step-card">
+          <span class="step-num">01</span>
+          <div class="step-icon" aria-hidden="true">▣</div>
+          <h3>Capture</h3>
+          <p>
+            A camera captures an image or
+            depth/infrared information of a face.
+          </p>
+        </article>
+
+        <article class="step-card">
+          <span class="step-num">02</span>
+          <div class="step-icon" aria-hidden="true">⌗</div>
+          <h3>Represent</h3>
+          <p>
+            Software converts facial information
+            into a numerical representation.
+          </p>
+        </article>
+
+        <article class="step-card">
+          <span class="step-num">03</span>
+          <div class="step-icon" aria-hidden="true">≈</div>
+          <h3>Compare</h3>
+          <p>
+            The representation is compared with
+            a stored template or a database.
+          </p>
+        </article>
+
+        <article class="step-card">
+          <span class="step-num">04</span>
+          <div class="step-icon" aria-hidden="true">✓</div>
+          <h3>Decide</h3>
+          <p>
+            The system returns a match result or
+            score, which may influence a human decision.
+          </p>
+        </article>
+
+      </div>
+
+      <p class="source-line">
+        Technical references:
+
+        <a href="https://support.apple.com/en-us/102381"
+           target="_blank"
+           rel="noopener noreferrer">
+          Apple Face ID documentation
+        </a>;
+
+        <a href="https://pages.nist.gov/frvt/html/frvt_demographics.html"
+           target="_blank"
+           rel="noopener noreferrer">
+          NIST Face Recognition Technology Evaluation
+        </a>.
+
+        This is a simplified general workflow,
+        not a diagram of one specific product.
+      </p>
+
+    </section>
+
+    <!-- SECTION 4: Why Facial Recognition Matters -->
+    <section class="section section-contrast">
+
+      <div class="container two-col-intro">
+
+        <div>
+          <p class="kicker">02 / WHY THIS MATTERS</p>
+
+          <h2>
+            The same capability.
+            <span class="text-accent">
+              Different consequences.
+            </span>
+          </h2>
+        </div>
+
+        <div>
+          <p>
+            A person choosing to unlock their own
+            phone is not the same as a shopper being
+            checked against a watchlist.
+
+            The technology's purpose, consent model,
+            accuracy, safeguards, and consequences
+            all matter.
+          </p>
+
+          <p>
+            We compare two documented applications
+            to explore what responsible use might
+            look like.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Two Real-World Case Studies -->
+      <div class="container case-preview-grid">
+
+        <article class="preview-card preview-apple">
+
+          <div class="preview-top">
+
+            <span class="tag tag-mint">
+              CASE A • VERIFICATION
+            </span>
+
+            <span class="preview-symbol" aria-hidden="true">
+              ◉
+            </span>
+
+          </div>
+
+          <h3>Apple Face ID</h3>
+
+          <p>
+            An enrolled user looks at their device
+            to authenticate. We examine convenience,
+            security, user choice, and limits.
+          </p>
+
+          <a class="text-link"
+             href="case-studies.html#apple">
+            Read the Apple case →
+          </a>
+
+        </article>
+
+        <article class="preview-card preview-rite">
+
+          <div class="preview-top">
+
+            <span class="tag tag-amber">
+              CASE B • IDENTIFICATION
+            </span>
+
+            <span class="preview-symbol" aria-hidden="true">
+              ⌖
+            </span>
+
+          </div>
+
+          <h3>Rite Aid surveillance</h3>
+
+          <p>
+            A store used face recognition to flag
+            alleged persons of interest.
+
+            We examine false matches, unequal
+            impacts, and accountability.
+          </p>
+
+          <a class="text-link"
+             href="case-studies.html#rite-aid">
+            Read the Rite Aid case →
+          </a>
+
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: Ethical Concerns -->
+    <section class="section container">
+
+      <div class="section-heading">
+
+        <p class="kicker">03 / THE CENTRAL QUESTION</p>
+
+        <h2>Is facial recognition always ethical?</h2>
+
+        <p>
+          No single answer fits every use.
+
+          Explore the concerns below, then see
+          how two ethical frameworks can lead
+          us to different judgments.
+        </p>
+
+      </div>
+
+      <div class="reveal-card">
+
+        <div>
+
+          <p class="reveal-prompt">Explore the risks</p>
+
+          <h3>What could go wrong?</h3>
+
+          <p>
+            Click to uncover questions every
+            developer and organization should ask.
+          </p>
+
+          <button class="button button-primary"
+                  id="learnMoreBtn"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="extraInfo">
+
+            Reveal ethical concerns ↓
+
+          </button>
+
+        </div>
+
+        <div id="extraInfo" hidden>
+
+          <ul class="risk-list">
+
+            <li>
+              <strong>Privacy:</strong>
+              Was biometric information collected
+              with meaningful notice and choice?
+            </li>
+
+            <li>
+              <strong>Fairness:</strong>
+              Are error rates different across
+              demographic groups or conditions?
+            </li>
+
+            <li>
+              <strong>Accountability:</strong>
+              Who reviews a match before anyone
+              faces consequences?
+            </li>
+
+            <li>
+              <strong>Security:</strong>
+              How is facial data stored,
+              protected, and deleted?
+            </li>
+
+          </ul>
+
+          <a class="text-link" href="ethics.html">
+            Compare the ethical lenses →
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- SECTION 6: Closing -->
+    <section class="closing-cta">
+
+      <div class="container closing-inner">
+
+        <div>
+
+          <p class="kicker">KEEP EXPLORING</p>
+
+          <h2>
+            Technology isn't the entire story.<br>
+
+            <span class="text-accent">
+              How we use it is.
+            </span>
+
+          </h2>
+
+        </div>
+
+        <a class="button button-primary"
+           href="case-studies.html">
+
+          Investigate the real-world cases →
+
+        </a>
+
+      </div>
+
+    </section>
+
   </main>
 
-  <footer>
-    <p>IT Ethics Final Project | George Mason University</p>
+  <!-- Website Footer -->
+  <footer class="site-footer">
+
+    <div class="container footer-inner">
+
+      <div>
+        <strong>Your Face. Their Data.</strong>
+
+        <p>
+          An IT ethics student project about
+          facial recognition and its social impact.
+        </p>
+      </div>
+
+      <div class="footer-right">
+
+        <a href="case-studies.html">
+          Explore case studies
+        </a>
+
+        <a href="ethics.html">
+          Explore ethics
+        </a>
+
+        <span>
+          Research • Reflection • Responsible design
+        </span>
+
+      </div>
+
+    </div>
+
   </footer>
+
 </body>
 </html>
