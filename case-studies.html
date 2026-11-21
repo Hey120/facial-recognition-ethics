@@ -1,27 +1,433 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Facial Recognition Ethics</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Studies | Your Face, Their Data</title>
+  <meta name="description" content="Two real-world uses of facial recognition: Apple Face ID and Rite Aid's in-store surveillance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0f1115; --panel: #171a21; --panel-2: #1e222b;
+      --text: #e9e7e2; --muted: #a3a7b0;
+      --accent: #ff6b4a; --accent-2: #4ad6c8; --line: #2a2f3a; --radius: 14px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "Inter", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px; }
+    a { color: var(--accent-2); }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 10; background: rgba(15,17,21,0.9); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .logo { font-family: "Fraunces", serif; font-weight: 800; font-size: 1.15rem; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 22px; list-style: none; flex-wrap: wrap; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* LAYOUT */
+    section { padding: 80px 24px; }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    .narrow { max-width: 760px; }
+    h1, h2, h3 { font-family: "Fraunces", serif; line-height: 1.15; }
+    h1 { font-size: clamp(2.4rem, 5.5vw, 3.8rem); margin-bottom: 18px; }
+    h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); margin-bottom: 18px; }
+    h3 { font-size: 1.25rem; margin-bottom: 8px; }
+    p + p { margin-top: 14px; }
+    .eyebrow { display: inline-block; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
+    .eyebrow.teal { color: var(--accent-2); }
+    .muted { color: var(--muted); }
+    .alt { background: var(--panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+    /* PAGE HEADER */
+    .page-head { padding: 90px 24px 50px; }
+    .page-head p.lead { font-size: 1.15rem; color: var(--muted); max-width: 680px; }
+    .jump { display: flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; }
+    .pill { padding: 10px 20px; border-radius: 999px; border: 1px solid var(--line); text-decoration: none; color: var(--text); font-weight: 500; }
+    .pill.teal { border-color: var(--accent-2); }
+    .pill.orange { border-color: var(--accent); }
+
+    /* COMPARISON TABLE */
+    .compare { width: 100%; border-collapse: collapse; margin-top: 24px; background: var(--panel); border-radius: var(--radius); overflow: hidden; }
+    .compare th, .compare td { padding: 16px 18px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+    .compare th { font-family: "Fraunces", serif; font-size: 1.05rem; background: var(--panel-2); }
+    .compare th.teal { color: var(--accent-2); }
+    .compare th.orange { color: var(--accent); }
+    .compare td:first-child { color: var(--muted); font-weight: 600; font-size: 0.9rem; width: 26%; }
+    .compare tr:last-child td { border-bottom: none; }
+
+    /* CASE LAYOUT */
+    .case-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 50px; align-items: start; margin-top: 20px; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+    .alt .card { background: var(--bg); }
+    .card + .card { margin-top: 16px; }
+    .card p { color: var(--muted); font-size: 0.95rem; }
+    .big-stat { font-family: "Fraunces", serif; font-size: 2.3rem; line-height: 1.1; display: block; margin-bottom: 6px; }
+    .teal-text { color: var(--accent-2); }
+    .orange-text { color: var(--accent); }
+
+    /* MINI STEPS */
+    .mini-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 26px 0; }
+    .mini { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
+    .mini .icon { font-size: 1.6rem; display: block; margin-bottom: 6px; }
+    .mini p { font-size: 0.88rem; color: var(--muted); }
+
+    /* CHALLENGES */
+    .challenges { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 26px; }
+    .challenge { border-left: 3px solid var(--accent-2); padding: 4px 0 4px 18px; }
+    .challenge.orange { border-left-color: var(--accent); }
+    .challenge p { color: var(--muted); font-size: 0.95rem; }
+
+    /* TIMELINE */
+    .timeline { position: relative; margin: 30px 0 10px; padding-left: 30px; }
+    .timeline::before { content: ""; position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+    .t-item { position: relative; margin-bottom: 26px; }
+    .t-item::before { content: ""; position: absolute; left: -28px; top: 7px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); }
+    .t-item .year { font-family: "Fraunces", serif; color: var(--accent); font-size: 1.1rem; }
+    .t-item p { color: var(--muted); font-size: 0.95rem; }
+
+    /* STORY CALLOUT */
+    .story { background: rgba(255,107,74,.08); border: 1px solid var(--accent); border-radius: var(--radius); padding: 28px; margin: 30px 0; }
+    .story h3 { color: var(--accent); }
+    .story p { color: var(--text); }
+
+    /* CHAIN DIAGRAM */
+    .chain { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 22px; }
+    .chain .box { background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-size: 0.88rem; flex: 1; min-width: 140px; text-align: center; }
+    .chain .box.bad { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+    .chain .arrow { color: var(--muted); font-size: 1.2rem; }
+
+    /* NEXT */
+    .next { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: 13px 24px; border-radius: 999px; background: var(--accent); color: #111; font-weight: 600; text-decoration: none; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--line); padding: 50px 24px; font-size: 0.9rem; color: var(--muted); }
+    footer h4 { color: var(--text); margin-bottom: 10px; font-family: "Fraunces", serif; font-size: 1.1rem; }
+    footer ol { padding-left: 20px; }
+    footer li { margin-bottom: 6px; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 860px) {
+      .case-grid, .challenges { grid-template-columns: 1fr; }
+      .mini-steps { grid-template-columns: 1fr; }
+      .chain .arrow { transform: rotate(90deg); width: 100%; text-align: center; }
+      .compare th, .compare td { padding: 12px; font-size: 0.88rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Facial Recognition Ethics</h1>
-  </header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="case-studies.html">Case Studies</a>
-    <a href="ethics.html">Ethics</a>
-    <a href="recommendations.html">Solutions</a>
+  <!-- ================= NAV ================= -->
+  <nav aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">Your Face, <span>Their Data</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="case-studies.html" class="active">Case Studies</a></li>
+        <li><a href="ethics.html">Ethics</a></li>
+        <li><a href="recommendations.html">Recommendations</a></li>
+      </ul>
+    </div>
   </nav>
 
   <main>
-    <h2>Section Coming Soon</h2>
-    <p>Our team is working on this section.</p>
+
+    <!-- ================= PAGE HEADER ================= -->
+    <header class="page-head">
+      <div class="wrap">
+        <span class="eyebrow">Part 2 · Real-world examples</span>
+        <h1>Same technology,<br>two very different stories</h1>
+        <p class="lead">
+          To really understand facial recognition, we looked at two real companies that use it. One is something most of
+          us carry in our pocket. The other ended with a federal ban. The tech underneath is pretty similar. What's different is
+          <em>who</em> is in control and <em>whether people even knew</em>.
+        </p>
+        <div class="jump">
+          <a href="#faceid" class="pill teal">Case 1: Apple Face ID</a>
+          <a href="#riteaid" class="pill orange">Case 2: Rite Aid</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= QUICK COMPARISON ================= -->
+    <section style="padding-top:10px;">
+      <div class="wrap reveal">
+        <h2>The quick version</h2>
+        <p class="muted">Here's how the two cases stack up side by side before we get into the details.</p>
+        <div style="overflow-x:auto;">
+          <table class="compare">
+            <thead>
+              <tr><th></th><th class="teal">Apple Face ID</th><th class="orange">Rite Aid</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Type</td><td>1 : 1 verification (is this the phone's owner?)</td><td>1 : many identification (is this shopper on our list?)</td></tr>
+              <tr><td>Did people agree?</td><td>Yes, you have to set it up yourself</td><td>No, customers weren't told it was happening</td></tr>
+              <tr><td>Where the face data goes</td><td>Stays on your phone</td><td>A company database of tens of thousands of people</td></tr>
+              <tr><td>Image quality</td><td>3D scan, close up, good lighting</td><td>Often low-quality security camera, phone, and news photos</td></tr>
+              <tr><td>What happens if it's wrong</td><td>Your phone doesn't unlock, so you type your passcode</td><td>You might get followed, searched, kicked out, or reported to police</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CASE 1: FACE ID ================= -->
+    <section id="faceid" class="alt">
+      <div class="wrap">
+        <div class="narrow reveal">
+          <span class="eyebrow teal">Case study 1</span>
+          <h2>Apple Face ID: your face as your key</h2>
+          <p>
+            Apple introduced Face ID in 2017 with the iPhone X, and now it's how millions of people unlock their phones,
+            pay with Apple Pay, and log into apps. A lot of us honestly don't remember the last time we typed our passcode.
+          </p>
+          <p>
+            What makes Face ID interesting for our project is that Apple designed it with privacy in mind. Your face
+            data doesn't get sent to Apple. It stays locked inside a special chip on your phone.
+          </p>
+        </div>
+
+        <div class="mini-steps reveal">
+          <div class="mini">
+            <span class="icon" aria-hidden="true">🔦</span>
+            <h3>Projects dots</h3>
+            <p>The TrueDepth camera shines over 30,000 invisible infrared dots onto your face to build a 3D map.</p>
+          </div>
+          <div class="mini">
+            <span class="icon" aria-hidden="true">🔐</span>
+            <h3>Locks it away</h3>
+            <p>The math version of your face is encrypted and kept in the phone's Secure Enclave, not on Apple's servers or in iCloud.</p>
+          </div>
+          <div class="mini">
+            <span class="icon" aria-hidden="true">👀</span>
+            <h3>Checks attention</h3>
+            <p>By default it only unlocks if your eyes are open and looking at the phone, so it's harder to unlock while you're asleep.</p>
+          </div>
+        </div>
+
+        <div class="case-grid reveal">
+          <div>
+            <h3>Why this case matters</h3>
+            <p class="muted">
+              Face ID is probably the best-case version of facial recognition. It's opt-in, the data stays with you, and if
+              it messes up, the worst thing that happens is you type your passcode. We included it because you can't really
+              judge the bad uses of this tech without seeing what a more careful version looks like.
+            </p>
+
+            <h3 style="margin-top:30px;">But it's not perfect. Here are the challenges:</h3>
+            <div class="challenges">
+              <div class="challenge">
+                <h3>Twins and kids</h3>
+                <p>Apple itself says the chance of a false match is higher for twins, siblings who look alike, and children under 13 whose faces are still developing.</p>
+              </div>
+              <div class="challenge">
+                <h3>Can you be forced to unlock?</h3>
+                <p>A passcode lives in your head, but your face is just... there. U.S. courts haven't fully agreed on whether police can make someone unlock a phone with their face or fingerprint.</p>
+              </div>
+              <div class="challenge">
+                <h3>Making face scanning feel normal</h3>
+                <p>When unlocking your phone with your face becomes routine, people might get comfortable with face scanning everywhere, even in places where it's way less safe.</p>
+              </div>
+              <div class="challenge">
+                <h3>It's still your body as a password</h3>
+                <p>If biometric data ever leaks, you can't reset it. Apple's design limits this risk, but other companies copying the idea might not be as careful.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <span class="big-stat teal-text">1 in 1,000,000</span>
+              <p>Apple's estimate of the chance that a random person could unlock your phone with their face. For comparison, Apple says it's about 1 in 50,000 for Touch ID fingerprints.</p>
+            </div>
+            <div class="card">
+              <span class="big-stat teal-text">0</span>
+              <p>The number of times your Face ID data gets uploaded to Apple. It never leaves your device.</p>
+            </div>
+            <div class="card">
+              <span class="big-stat teal-text">2017</span>
+              <p>The year Face ID launched with the iPhone X. It's now on most iPhones and iPad Pros.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CASE 2: RITE AID ================= -->
+    <section id="riteaid">
+      <div class="wrap">
+        <div class="narrow reveal">
+          <span class="eyebrow">Case study 2</span>
+          <h2>Rite Aid: when the store is watching you</h2>
+          <p>
+            Rite Aid is a big U.S. pharmacy chain. For about eight years, it secretly used facial recognition in
+            hundreds of its stores to try to catch shoplifters. The goal sounds reasonable, right? Stores lose a lot
+            of money to theft. But the way Rite Aid did it ended up hurting a lot of innocent people.
+          </p>
+          <p>
+            Rite Aid hired two companies to build a database of "persons of interest," people it believed had
+            committed or tried to commit crimes in its stores. The database had images of tens of thousands of people,
+            pulled from security cameras, employees' phone cameras, and even news stories. A lot of those photos were
+            blurry or low quality.
+          </p>
+        </div>
+
+        <div class="wrap reveal">
+          <h3 style="margin-top:36px;">How a false alert turned into a real problem</h3>
+          <div class="chain" aria-label="Diagram showing how a false alert led to harm">
+            <div class="box">Blurry photo added to the database</div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="box">Innocent shopper walks in</div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="box">System says "match!"</div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="box">Employee acts on the alert</div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="box bad">Shopper followed, searched, kicked out, or reported to police</div>
+          </div>
+        </div>
+
+        <div class="case-grid reveal" style="margin-top:50px;">
+          <div>
+            <h3>Timeline</h3>
+            <div class="timeline">
+              <div class="t-item">
+                <span class="year">2012</span>
+                <p>Rite Aid starts using facial recognition in its stores. Customers aren't told.</p>
+              </div>
+              <div class="t-item">
+                <span class="year">2012–2020</span>
+                <p>The system creates thousands of false matches. Employees follow, search, and accuse customers, sometimes in front of their friends and family.</p>
+              </div>
+              <div class="t-item">
+                <span class="year">2020</span>
+                <p>Rite Aid stops using the technology.</p>
+              </div>
+              <div class="t-item">
+                <span class="year">Dec 2023</span>
+                <p>The Federal Trade Commission (FTC) bans Rite Aid from using facial recognition for 5 years and orders it to delete the images it collected.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <span class="big-stat orange-text">1,000+</span>
+              <p>Match alerts the system generated for the <em>same one person</em> in about two months, after a single photo was uploaded in the Bronx. That was nearly 5% of all of Rite Aid's alerts in that period.</p>
+            </div>
+            <div class="card">
+              <span class="big-stat orange-text">Tens of thousands</span>
+              <p>The number of people whose images ended up in Rite Aid's database.</p>
+            </div>
+            <div class="card">
+              <span class="big-stat orange-text">5 years</span>
+              <p>The length of the FTC's ban on Rite Aid using facial recognition.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="story reveal">
+          <h3>The story that stuck with us</h3>
+          <p>
+            According to the FTC, a Rite Aid employee stopped and searched an <strong>11-year-old girl</strong> because the
+            system wrongly matched her face to someone in the database. Her mom said she had to miss work because her daughter
+            was so upset about what happened.
+          </p>
+          <p>
+            For us, this one example says a lot. A computer made a guess, a person trusted it without questioning it, and a kid
+            paid the price.
+          </p>
+        </div>
+
+        <div class="narrow reveal">
+          <h3>The social challenges in this case</h3>
+          <div class="challenges" style="grid-template-columns:1fr;">
+            <div class="challenge orange">
+              <h3>No consent, no warning</h3>
+              <p>Customers had no idea their faces were being scanned and compared to a list. You can't object to something you don't know about.</p>
+            </div>
+            <div class="challenge orange">
+              <h3>The harm wasn't equal</h3>
+              <p>The FTC found the false matches hit people of color and women harder. This connects to research we mentioned on the homepage showing many systems are less accurate on these groups.</p>
+            </div>
+            <div class="challenge orange">
+              <h3>Bad photos in, bad results out</h3>
+              <p>Using blurry, low-quality images made false matches way more likely. The FTC also said Rite Aid didn't properly test how accurate the system was, before or after rolling it out.</p>
+            </div>
+            <div class="challenge orange">
+              <h3>People trusted the machine too much</h3>
+              <p>Employees were acting on alerts without really double-checking them. When a computer says "match," it feels official, even when it's wrong.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WHY IT'S HARD ================= -->
+    <section class="alt">
+      <div class="wrap narrow reveal">
+        <span class="eyebrow">Putting it together</span>
+        <h2>So why is this tech so hard to use well?</h2>
+        <p>
+          Looking at both cases, we noticed it's not really the algorithm alone that decides whether facial recognition is
+          helpful or harmful. It's the whole setup around it. Face ID works pretty well because it's comparing you to one
+          clear, 3D scan of yourself, you agreed to it, and a mistake costs you about two seconds.
+        </p>
+        <p>
+          Rite Aid flipped all of that. Blurry photos, a huge database, no consent, and real consequences for being wrong.
+          The bigger the database and the worse the photos, the more likely it is that the system finds someone who just
+          <em>kind of</em> looks like you. And when the people getting flagged are already more likely to be misidentified,
+          the tech ends up making existing unfairness worse.
+        </p>
+        <p>
+          That raises the big question for the next part of our project: is facial recognition okay as long as the benefits
+          outweigh the harms? Or do people have rights over their own faces no matter what?
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= NEXT ================= -->
+    <section>
+      <div class="wrap next reveal">
+        <div>
+          <span class="eyebrow">Up next · Part 3</span>
+          <h2 style="margin-bottom:0;">Looking at it through ethics</h2>
+        </div>
+        <a href="ethics.html" class="btn">Go to Ethics →</a>
+      </div>
+    </section>
+
   </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="wrap">
+      <h4>Sources for this page</h4>
+      <ol>
+        <li>Apple. "About Face ID advanced technology." <a href="https://support.apple.com/en-us/102381" target="_blank" rel="noopener">support.apple.com</a></li>
+        <li>Federal Trade Commission (2023). "Rite Aid Banned from Using AI Facial Recognition After FTC Says Retailer Deployed Technology without Reasonable Safeguards." <a href="https://www.ftc.gov/news-events/news/press-releases/2023/12/rite-aid-banned-using-ai-facial-recognition-after-ftc-says-retailer-deployed-technology-without-reasonable-safeguards" target="_blank" rel="noopener">ftc.gov</a></li>
+        <li>CBS News (2023). "Rite Aid 'covert surveillance program' falsely ID'd customers as shoplifters, FTC says." <a href="https://www.cbsnews.com/news/ai-rite-aid-customers-falsely-identified-as-shoplifters-ftc" target="_blank" rel="noopener">cbsnews.com</a></li>
+        <li>The Register (2023). "FTC bans Rite Aid from using AI facial recognition in stores for 5 years." <a href="https://www.theregister.com/2023/12/20/rite_aid_facial_recognition/" target="_blank" rel="noopener">theregister.com</a></li>
+        <li>Manatt (2023). "FTC Bans Rite Aid From Using AI Facial Recognition Due to Falsely Tagging Consumers as Shoplifters." <a href="https://www.manatt.com/insights/newsletters/advertising-law/ftc-bans-rite-aid-from-using-ai-facial-recognition" target="_blank" rel="noopener">manatt.com</a></li>
+      </ol>
+      <p style="margin-top:24px;">Made by Team F4 for our IT &amp; Society final project · 2026</p>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
